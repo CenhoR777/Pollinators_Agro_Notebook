@@ -62,6 +62,8 @@ This was done using `copy_files.sh`
 
 # Raw Data Filtering
 
+Raw data `fastq` files were analyzed with `fastqc` and the resultss were summarized using `multiqc`: [summarized `fastqc` results](html_reports/RawData_fastqc_multiqc_report.html).
+
 ## `fastp`
 
 `fastq` files were filtered with `fastp v0.23.4`.
@@ -76,6 +78,8 @@ bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/2_filtering/fastpRun.sh
 
 `fastp` reports were summarized using `multiqc`: [sumarized `fastp` results](html_reports/fastp_summarized_results_multiqc_report.html).
 
-Post-filtering `fastq` files were analyzed with `fastqc` and ts were summarized using `multiqc`: [summarized `fastqc` results](html_reports/post_filtering_fastq_multiqc_report.html).      
+Post-filtering `fastq` files were analyzed with `fastqc` and the results were summarized using `multiqc`: [summarized `fastqc` results](html_reports/post_filtering_fastq_multiqc_report.html).
+
+
 
 
