@@ -20,6 +20,7 @@
 
 # RStudio files
 .Rproj.user/
+Pollinators_Agro_Notebook.Rproj
 
 # produced vignettes
 vignettes/*.html
