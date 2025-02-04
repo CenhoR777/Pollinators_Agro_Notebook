@@ -1,0 +1,81 @@
+---
+title: "Pollinators_Agro_report"
+author: "Davide Galhofa"
+format:
+  html:
+    theme: flatly
+    grid:
+      margin-width: 100px
+    toc: true
+    toc-float: true
+    toc-location: left
+    toc-depth: 4
+    number-sections: true
+    number-depth: 4
+    code-overflow: wrap
+    self-contained: true
+engine: knitr
+execute:
+  eval: false
+include-in-header:
+  - text: |
+      <style>
+      .cell-output-stdout code {
+        word-break: break-word   !important;
+        white-space: pre-wrap !important;
+      }
+      </style>
+---
+
+# File Management
+
+## Correcting Formatting Mistakes
+
+Some original `fastq` files came from CDGenomics with a formatting error where the length of the quality score lines was longer than the DNA sequence lines.
+This was corrected using `fastqTipCutter.py`.
+The script was wrapped for each sequencing batch using `fastqTipCuterWrapper.sh`.
+
+Results in `mnt/data2/Project_Polli_agro/Operational/0_pre_analysis_rawdata_formating`.
+
+## Merging and Renaming Files
+
+Files from different sequencing batches that belonged to the same sample were merged.
+
+First, "_1st" and "_2nd" was appended to the names of the files from the first and second batches, respectively.
+Then, merging was performed using script `fastqMerger_v2.sh`.
+
+Fastq files were then renamed using script `fastqRenamer.sh`, using the following key: `/mnt/data2/Project_Polli_agro/Operational/2_sample_lists/plate_CDGenomics_key.txt`.
+**These are the original working names, set at the time of sampling**.
+
+Results are in `/mnt/data2/Project_Polli_agro/Operational/0_pre_analysis_rawdata_formating/2_merge_and_rename`.
+
+## Subsetting SSF Samples
+
+Some samples collected for the other projects were adopted into this one. 
+To make sample names consistent, some `fastq` files were renamed again using `fastqRenamer.sh`, using the following key: `/mnt/data2/Project_Polli_agro/Operational/2_metadata/02_SSF_samples/01_sample_files/names_changed_2run.txt`
+
+Results are in `/mnt/data2/Project_Polli_agro/Operational/0_pre_analysis_rawdata_formating/2_merge_and_rename`.
+
+Then, only samples to be used in this project were selected and moved to the `raw_data` directory.
+The **197** sample names can be found `/mnt/data2/Project_Polli_agro/Operational/2_metadata/02_SSF_samples/01_sample_files/SSF_sample_list_2nd_run.txt`.
+This was done using `copy_files.sh`
+
+# Raw Data Filtering
+
+## `fastp`
+
+`fastq` files were filtered with `fastp v0.23.4`.
+
+```{bash}
+bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/2_filtering/fastpRun.sh \
+-i /mnt/data2/Project_Polli_agro/Operational/1_raw_data/ \
+-o /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/00_qc/00_fastp/ \
+-s /mnt/data2/Project_Polli_agro/Operational/2_metadata/02_SSF_samples/01_sample_files/SSF_sample_list_2nd_run.txt \
+-x '--detect_adapter_for_pe --adapter_fasta /mnt/data2/Project_Polli_agro/Operational/2_metadata/00_CDGenomics/CDGenomics_adapters_list.fa --dedup --dup_calc_accuracy 6 --trim_poly_g --trim_poly_x --max_len1 140 --max_len2 140 --length_required 140 --overrepresentation_analysis --qualified_quality_phred 20 --thread 16'
+```
+
+`fastp` reports were summarized using `multiqc`: [sumarized `fastp` results](html_reports/fastp_summarized_results_multiqc_report.html).
+
+Post-filtering `fastq` files were analyzed with `fastqc` and ts were summarized using `multiqc`: [summarized `fastqc` results](html_reports/post_filtering_fastq_multiqc_report.html).      
+
+
