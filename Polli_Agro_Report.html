@@ -3040,6 +3040,12 @@ white-space: pre-wrap !important;
   <ul>
   <li><a href="#fastp" id="toc-fastp" class="nav-link" data-scroll-target="#fastp"><span class="header-section-number">2.1</span> <code>fastp</code></a></li>
   </ul></li>
+  <li><a href="#snp-calling" id="toc-snp-calling" class="nav-link" data-scroll-target="#snp-calling"><span class="header-section-number">3</span> SNP calling</a>
+  <ul>
+  <li><a href="#process_radtags" id="toc-process_radtags" class="nav-link" data-scroll-target="#process_radtags"><span class="header-section-number">3.1</span> <code>process_radtags</code></a></li>
+  <li><a href="#bwa-mapping" id="toc-bwa-mapping" class="nav-link" data-scroll-target="#bwa-mapping"><span class="header-section-number">3.2</span> <code>BWA</code> Mapping</a></li>
+  <li><a href="#ref_map.pl" id="toc-ref_map.pl" class="nav-link" data-scroll-target="#ref_map.pl"><span class="header-section-number">3.3</span> <code>ref_map.pl</code></a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -3093,7 +3099,7 @@ white-space: pre-wrap !important;
 </section>
 <section id="raw-data-filtering" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Raw Data Filtering</h1>
-<p>Raw data <code>fastq</code> files were analyzed with <code>fastqc</code> and the resultss were summarized using <code>multiqc</code>: <a href="html_reports/RawData_fastqc_multiqc_report.html">summarized <code>fastqc</code> results</a>.</p>
+<p>Raw data <code>fastq</code> files were analyzed with <code>fastqc</code> and the results were summarized using <code>multiqc</code>: <a href="html_reports/RawData_fastqc_multiqc_report.html">summarized <code>fastqc</code> results</a>.</p>
 <section id="fastp" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="fastp"><span class="header-section-number">2.1</span> <code>fastp</code></h2>
 <p><code>fastq</code> files were filtered with <code>fastp v0.23.4</code>.</p>
@@ -3106,6 +3112,41 @@ white-space: pre-wrap !important;
 </div>
 <p><code>fastp</code> reports were summarized using <code>multiqc</code>: <a href="html_reports/fastp_summarized_results_multiqc_report.html">sumarized <code>fastp</code> results</a>.</p>
 <p>Post-filtering <code>fastq</code> files were analyzed with <code>fastqc</code> and the results were summarized using <code>multiqc</code>: <a href="html_reports/post_filtering_fastq_multiqc_report.html">summarized <code>fastqc</code> results</a>.</p>
+</section>
+</section>
+<section id="snp-calling" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> SNP calling</h1>
+<p>SNP calling was done with <code>Stacks</code> v.2.65</p>
+<section id="process_radtags" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="process_radtags"><span class="header-section-number">3.1</span> <code>process_radtags</code></h2>
+<p><code>process_radtags</code> was run on already demultiplexed and filtered <code>fastq</code> files. Input file names were changed from “_R1.” and “_R2.” to “_R1_.” and “_R2_.”, otherwise Stacks wouldn’t detect them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">process_radtags</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>--paired <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>--in-path /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/00_qc/00_fastp/ <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-o /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/01_process_radtags <span class="dt">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>--threads 32 <span class="at">--clean</span> <span class="at">--rescue</span> <span class="at">-e</span> pstI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="bwa-mapping" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="bwa-mapping"><span class="header-section-number">3.2</span> <code>BWA</code> Mapping</h2>
+<p>Reference genomes were indexed with <code>bwa-mem2 index</code>. (<em>note: chromosome names were shortened</em>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa-mem2</span> index <span class="at">-p</span> a_flavipes_ref_genome a_flavipes_ref_genome.fa </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa-mem2</span> index <span class="at">-p</span> b_terrestris_ref_genome b_terrestris_ref_genome.fa </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa-mem2</span> index <span class="at">-p</span> l_malachurum_ref_genome l_malachurum_ref_genome.fa </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Mapping for each species was performed with <code>BWA</code> and <code>Samtools</code> wrapped under <code>bwaSamtoolsWrapper.sh</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/bwaSamtoolsWrapper.sh <span class="at">-i</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/01_process_radtags/ <span class="at">-s</span> /mnt/data2/Project_Polli_agro/Operational/2_metadata/02_SSF_samples/01_sample_files/AFL_sample_list_stacks_2nd_run.txt <span class="at">-o</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/02_BWA/AND/ <span class="at">-n</span> /mnt/data2/Project_Polli_agro/Operational/6_reference_genomes/a_flavipes/a_flavipes_ref_genome <span class="at">-x</span> <span class="st">&#39;-t 10&#39;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/bwaSamtoolsWrapper.sh <span class="at">-i</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/01_process_radtags/ <span class="at">-s</span> /mnt/data2/Project_Polli_agro/Operational/2_metadata/02_SSF_samples/01_sample_files/BTL_sample_list_stacks_2nd_run.txt <span class="at">-o</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/02_BWA/BOM/ <span class="at">-n</span> /mnt/data2/Project_Polli_agro/Operational/6_reference_genomes/b_terrestris/b_terrestris_ref_genome <span class="at">-x</span> <span class="st">&#39;-t 10&#39;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/bwaSamtoolsWrapper.sh <span class="at">-i</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/01_process_radtags/ <span class="at">-s</span> /mnt/data2/Project_Polli_agro/Operational/2_metadata/02_SSF_samples/01_sample_files/LGL_sample_list_stacks_2nd_run.txt <span class="at">-o</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/02_BWA/LML/ <span class="at">-n</span> /mnt/data2/Project_Polli_agro/Operational/6_reference_genomes/l_malachurum/l_malachurum_ref_genome <span class="at">-x</span> <span class="st">&#39;-t 10&#39;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ref_map.pl" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="ref_map.pl"><span class="header-section-number">3.3</span> <code>ref_map.pl</code></h2>
 </section>
 </section>
 
