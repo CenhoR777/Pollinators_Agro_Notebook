@@ -199,7 +199,7 @@ bcftools view --samples ^BOM_SAH_002_poll504,BOM_ARRA_001_poll026 -Oz -o BOM_stk
 
 ## `fineRADstructure`
 
-```{R}
+```{bash}
 Rscript /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/3_structure/fineRADStructureWrapper.R /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz  /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/02_structure/01_fineRADstructure/AND/ /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/3_structure/FinestructureLibrary.R 
 
 Rscript /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/3_structure/fineRADStructureWrapper.R /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_rm.vcf.gz    /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/02_structure/01_fineRADstructure/BOM/ /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/3_structure/FinestructureLibrary.R 
@@ -219,7 +219,7 @@ structure_threader run -i /mnt/data2/Project_Polli_agro/Operational/4_data_analy
 
 ## `PCA`
 
-```{R}
+```{bash}
 Rscript /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/3_structure/snp_pca_static.R 
 /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf
 /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/02_structure/03_PCA/AND/AND_snp_PCA
@@ -235,7 +235,8 @@ Rscript /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scr
 /mnt/data2/Project_Polli_agro/Operational/2_metadata/02_SSF_samples/01_sample_files/LGL_structure_popfile.txt
 ```
 
+# Land-use analysis
 
+Land-use analyses were done using the following R packages: landscapemetrics_2.1.3, terra_1.8-5, sf_1.0-16. 
 
-
-
+The analyses can be accessed at [land-use analyses](html_reports/landuse/EnvironmentalLandUseData.html).
