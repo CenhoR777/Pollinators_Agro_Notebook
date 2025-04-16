@@ -3045,8 +3045,8 @@ white-space: pre-wrap !important;
   <li><a href="#process_radtags" id="toc-process_radtags" class="nav-link" data-scroll-target="#process_radtags"><span class="header-section-number">3.1</span> <code>process_radtags</code></a></li>
   <li><a href="#bwa-mapping" id="toc-bwa-mapping" class="nav-link" data-scroll-target="#bwa-mapping"><span class="header-section-number">3.2</span> <code>BWA</code> Mapping</a></li>
   <li><a href="#ref_map.pl" id="toc-ref_map.pl" class="nav-link" data-scroll-target="#ref_map.pl"><span class="header-section-number">3.3</span> <code>ref_map.pl</code></a></li>
-  <li><a href="#bcftools" id="toc-bcftools" class="nav-link" data-scroll-target="#bcftools"><span class="header-section-number">3.4</span> <code>BCFTools</code></a></li>
-  <li><a href="#vcftools---kindship-analysis" id="toc-vcftools---kindship-analysis" class="nav-link" data-scroll-target="#vcftools---kindship-analysis"><span class="header-section-number">3.5</span> <code>VCFTools</code> - Kindship analysis</a></li>
+  <li><a href="#vcftools---kindship-analysis" id="toc-vcftools---kindship-analysis" class="nav-link" data-scroll-target="#vcftools---kindship-analysis"><span class="header-section-number">3.4</span> <code>VCFTools</code> - Kindship analysis</a></li>
+  <li><a href="#bcftools" id="toc-bcftools" class="nav-link" data-scroll-target="#bcftools"><span class="header-section-number">3.5</span> <code>BCFTools</code></a></li>
   </ul></li>
   <li><a href="#structure-analysis" id="toc-structure-analysis" class="nav-link" data-scroll-target="#structure-analysis"><span class="header-section-number">4</span> Structure analysis</a>
   <ul>
@@ -3189,33 +3189,31 @@ white-space: pre-wrap !important;
 </div>
 <p><code>ref_map.pl</code> reports were summarized using <code>multiqc</code>: <a href="html_reports/6_ref_map_multiqc_report_.html">sumarized <code>ref_map.pl</code> results</a>.</p>
 </section>
-<section id="bcftools" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="bcftools"><span class="header-section-number">3.4</span> <code>BCFTools</code></h2>
-<p>VCF files were filtered with <code>BCFTools</code>. Filtering parameters were as follow: only bi-allelic SNPs, with minor allele count of equal or above 2, mean depth between 10 and 100 and a missing frequency bellow 20%.</p>
-<p>VCF filtered files were thinned with a window of 1000bp, keeping only the first SNP in each window.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/AND/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/BOM/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/LML/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="vcftools---kindship-analysis" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="vcftools---kindship-analysis"><span class="header-section-number">3.5</span> <code>VCFTools</code> - Kindship analysis</h2>
+<section id="vcftools---kindship-analysis" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="vcftools---kindship-analysis"><span class="header-section-number">3.4</span> <code>VCFTools</code> - Kindship analysis</h2>
 <p><code>VCFTools</code> was used to calculate and output a relatedness statistic. The relatedness value to use is 0.20. From a par of individuals with a relatedness value higher than 0.20, remove the one with the lowest coverage/quality.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--gzvcf</span> ./AND_stk_mac2_bi_meanDP10-100_maxmiss20_centersnp.vcf.gz <span class="at">--out</span> AND_relatedness2 <span class="at">--relatedness2</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--gzvcf</span> ./BOM_stk_mac2_bi_meanDP10-100_maxmiss20_centersnp.vcf.gz <span class="at">--out</span> BOM_relatedness2 <span class="at">--relatedness2</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--gzvcf</span> ./LGL_stk_mac2_bi_meanDP10-100_maxmiss20_centersnp.vcf.gz <span class="at">--out</span> LGL_relatedness2 <span class="at">--relatedness2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--vcf</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/AND/populations.snps.vcf <span class="at">--out</span> AND_relatedness2.txt <span class="at">--relatedness2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--vcf</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/BOM/populations.snps.vcf <span class="at">--out</span> BOM_relatedness2.txt <span class="at">--relatedness2</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vcftools</span> <span class="at">--vcf</span> /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/LML/populations.snps.vcf <span class="at">--out</span> LGL_relatedness2.txt <span class="at">--relatedness2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Remove individuals that are related/from the same colony</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">--samples</span> ^BOM_SAH_002_poll504,BOM_ARRA_001_poll026 <span class="at">-Oz</span> <span class="at">-o</span> BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp_rm.vcf.gz BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">--samples</span> ^BOM_SAH_002_poll504,BOM_ARRA_001_poll026 <span class="at">-Oz</span> <span class="at">-o</span> BOM_stk_rm.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/BOM/populations.snps.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="bcftools" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="bcftools"><span class="header-section-number">3.5</span> <code>BCFTools</code></h2>
+<p>VCF files were filtered with <code>BCFTools</code>. Filtering parameters were as follow: only bi-allelic SNPs, with minor allele count of equal or above 2, mean depth between 10 and 100 and a missing frequency bellow 20%.</p>
+<p>VCF filtered files were thinned with a window of 1000bp, keeping only the first SNP in each window.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/AND/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">--samples</span> ^BOM_SAH_002_poll504,BOM_ARRA_001_poll026 <span class="at">-Oz</span> <span class="at">-o</span> BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_rm.vcf.gz BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_rm.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/LML/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

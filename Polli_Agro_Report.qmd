@@ -161,6 +161,24 @@ ref_map.pl \
 
 `ref_map.pl` reports were summarized using `multiqc`: [sumarized `ref_map.pl` results](html_reports/6_ref_map_multiqc_report_.html).
 
+## `VCFTools` - Kindship analysis
+
+`VCFTools` was used to calculate and output a relatedness statistic. The relatedness value to use is 0.20. From a par of individuals with a relatedness value higher than 0.20, remove the one with the lowest coverage/quality.
+
+```{bash}
+vcftools --vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/AND/populations.snps.vcf --out AND_relatedness2.txt --relatedness2
+
+vcftools --vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/BOM/populations.snps.vcf --out BOM_relatedness2.txt --relatedness2
+
+vcftools --vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/LML/populations.snps.vcf --out LGL_relatedness2.txt --relatedness2
+```
+
+Remove individuals that are related/from the same colony
+
+```{bash}
+bcftools view --samples ^BOM_SAH_002_poll504,BOM_ARRA_001_poll026 -Oz -o BOM_stk_rm.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/BOM/populations.snps.vcf
+```
+
 ## `BCFTools`
 
 VCF files were filtered with `BCFTools`. Filtering parameters were as follow: only bi-allelic SNPs, with minor allele count of equal or above 2, mean depth between 10 and 100 and a missing frequency bellow 20%.
@@ -168,31 +186,11 @@ VCF files were filtered with `BCFTools`. Filtering parameters were as follow: on
 VCF filtered files were thinned with a window of 1000bp, keeping only the first SNP in each window. 
 
 ```{bash}
-bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/AND/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz
+bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/AND/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/AND_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz
 
-bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/BOM/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz
+bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_rm.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/BOM_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz
 
-bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/LML/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz
-```
-
-## `VCFTools` - Kindship analysis
-
-`VCFTools` was used to calculate and output a relatedness statistic. The relatedness value to use is 0.20. From a par of individuals with a relatedness value higher than 0.20, remove the one with the lowest coverage/quality.
-
-```{bash}
-vcftools --gzvcf ./AND_stk_mac2_bi_meanDP10-100_maxmiss20_centersnp.vcf.gz --out AND_relatedness2 --relatedness2
-
-vcftools --gzvcf ./BOM_stk_mac2_bi_meanDP10-100_maxmiss20_centersnp.vcf.gz --out BOM_relatedness2 --relatedness2
-
-vcftools --gzvcf ./LGL_stk_mac2_bi_meanDP10-100_maxmiss20_centersnp.vcf.gz --out LGL_relatedness2 --relatedness2
-```
-
-Remove individuals that are related/from the same colony
-
-```{bash}
-bcftools view --samples ^BOM_SAH_002_poll504,BOM_ARRA_001_poll026 -Oz -o BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp_rm.vcf.gz BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz
-
-bcftools view --samples ^BOM_SAH_002_poll504,BOM_ARRA_001_poll026 -Oz -o BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20_rm.vcf.gz BOM_stk_minDP5_minGQ30_bi_mac2_meanDP10-100_maxmiss20.vcf.gz
+bash /mnt/data2/Project_Polli_agro/Operational/5_scripts/Pollinators_Agro_Scripts/2_SNP_calling/filterVCF.sh /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/03_refmap/LML/populations.snps.vcf /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20.vcf.gz /mnt/data2/Project_Polli_agro/Operational/4_data_analysis/01_snpcall/04_BCFtools/LGL_stk_minDP5_minGQ30_bi_maf02_meanDP10-100_maxmiss20_thinned1kbp.vcf.gz
 ```
 
 # Structure analysis
